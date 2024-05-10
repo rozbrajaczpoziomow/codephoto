@@ -15,43 +15,43 @@ app = Flask(__name__)
 
 class MyForm(FlaskForm):
     language = StringField('language')
-    code = StringField("code", validators=[DataRequired()])
+    code = StringField('code', validators=[DataRequired()])
 
 
 @app.route('/')
 def hello_world():
-    return render_template("input.html", languages=get_languages())
+    return render_template('input.html', languages=get_languages())
 
 
 @app.route('/upload/<path:filename>')
 def image(filename):
-    return send_from_directory("upload", filename, as_attachment=('download' in request.args))
+    return send_from_directory('upload', filename, as_attachment=('download' in request.args))
 
 def get_random_bg():
-    return random.choice(glob("templates/pycharm/*.png"))
+    return random.choice(glob('templates/pycharm/*.jpg'))
 
 def create_fname(l=6):
     return ''.join(map(lambda b: hex(b)[2:], random.randbytes(l)))
 
-@app.route("/code", methods=["POST"])
+@app.route('/code', methods=['POST'])
 def render_code():
     form = MyForm(meta={'csrf': False})
     if not form.validate():
-        return redirect("/")
+        return redirect('/')
     name = create_fname()
-    path = os.path.join(UPLOAD_DIR, name + ".png")
+    path = os.path.join('upload', name + '.png')
     make_image(form.code.data, path, form.language.data, background=get_random_bg())
     # upload(path, name, nickname)
-    return redirect("/i/" + name)
+    return redirect('/i/' + name)
 
 
 @app.route('/i/<path:filename>')
 def custom_static(filename):
-    path = os.path.join(UPLOAD_DIR, filename + ".png")
+    path = os.path.join('upload', filename + '.png')
     if os.path.exists(path):
-        return render_template("image.html", image=filename)
+        return render_template('image.html', image=filename)
     else:
-        return render_template("not_found.html"), 404
+        return render_template('not_found.html'), 404
 
 
 if __name__ == '__main__':

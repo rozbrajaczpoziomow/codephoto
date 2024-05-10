@@ -62,7 +62,7 @@ def limit_input(content: str, max_lines=47) -> str:
     return "\n".join(lines)
 
 
-matrix_cache: Dict[str, List[int]] = {}
+matrix_cache = {}
 
 
 def get_matrix_file(background: str) -> str:
@@ -98,9 +98,10 @@ def make_image(content, output, lang, background, dark=False, matrix=None):
     highlight(limit_input(content), lexer, formatter, output)
     transform(formatter.image, output, background, matrix)
 
+languages = []
 
 def get_languages():
-    if not languages:
+    if len(languages) == 0:
         languages.extend(sorted([
             x[0] for x in get_all_lexers()
         ]))
