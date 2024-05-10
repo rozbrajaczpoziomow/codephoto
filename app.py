@@ -5,6 +5,7 @@ import os
 import random
 
 from flask import Flask, render_template, redirect, send_from_directory, request
+from flask_cors import CORS
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -12,6 +13,7 @@ from wtforms.validators import DataRequired
 from highlighter import make_image, get_languages
 
 app = Flask(__name__)
+CORS(app)
 
 class MyForm(FlaskForm):
     language = StringField('language')
@@ -32,6 +34,10 @@ def get_random_bg():
 
 def create_fname(l=6):
     return ''.join(map(lambda b: hex(b)[2:], random.randbytes(l)))
+
+@app.route('/code', methods=['OPTIONS'])
+def code_options_cors():
+    return 'only here for cors'
 
 @app.route('/code', methods=['POST'])
 def render_code():
