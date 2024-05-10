@@ -1,0 +1,4 @@
+Pygments==2.18.0
+pillow==10.3.0
+Flask==3.0.3
+Flask-WTF==1.2.1
