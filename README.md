@@ -1,5 +1,5 @@
 # codephoto
-(fork of https://github.com/Tishka17/codephoto @0ae2319d but this one actually works)
+(fork of https://github.com/Tishka17/codephoto @0ae2319d but this one actually works)<br>
 Service for converting text into medium quality photos of screen
 
 ## Running
